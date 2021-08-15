@@ -1,0 +1,22 @@
+# Welcome to Chat Overhaul
+# This is a simple plugin that will overhaul your chat.
+
+# This is what the plugin prefix will be, i.e.: "[Chat Overhaul] plugin reloaded"
+plugin-prefix: "&e[&cChat Overhaul&e] "
+
+# This is what will show when a player sends a message
+# Vanilla default: "&f<<player>> <message>"
+# <player> - player name
+# <message> - player message
+message-format: "&f<player>&7 >>&f <message>"
+
+# This will set the join/leave message
+join-format: "&7[&a+&7] <player>"
+leave-format: "&7[&c-&7] <player>"
+
+# This is the format of the /msg command for both the receiver and sender
+# <sender> - user that used the /msg command
+# <player> - player that receives the message
+# <message> - the message
+message-command-format-receiver: "&7[&e<sender>&7 ->&e You&7] <message>"
+message-command-format-sender: "&7[&eYou&7 ->&e <player>&7] <message>"

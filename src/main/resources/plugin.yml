@@ -1,0 +1,26 @@
+name: SimpleChatOverhaul
+version: 1.0.0
+main: me.mystc.simplechatoverhaul.SimpleChatOverhaul
+api-version: 1.17
+authors: [mystc]
+description: A simple plugin that overhauls the chat.
+commands:
+  coreload:
+    description: Reloads the plugin
+    aliases: [chatreload, chatoverhaulreload]
+  message:
+    description: message a player on the server
+    aliases: [msg, whisper, w, tell]
+  reply:
+    description: reply to the last player you messaged
+    aliases: [r]
+permissions:
+  chat.reload:
+    description: Allows you to use the reload command
+    default: op
+  chat.message:
+    description: Allows you to use the message command
+    default: true
+  chat.reply:
+    description: Allows you to use the reply command
+    default: true
