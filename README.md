@@ -12,7 +12,7 @@ A simple plugin to overhaul your minecraft's chat.
 # Commands
 
 - /coreload(chatreload, chatoverhaulreload) | reloads the plugin
-- /message(msg, whisper, w, tell) <player> <message> | message a player on the server
+- /message(msg, whisper, w, tell) [player] <message> | message a player on the server
 - /reply(r) <message> | reply to the last player that messaged you or you messaged
 
 # Permissions
