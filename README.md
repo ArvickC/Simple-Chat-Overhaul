@@ -4,6 +4,7 @@ A simple plugin to overhaul your minecraft's chat.
 
 ## Features
 
+- [Showcase Video](https://youtu.be/IM39twCHZt8)
 - Custom join message
 - Custom leave message
 - Custom chat format
