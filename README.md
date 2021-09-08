@@ -8,6 +8,7 @@ A simple plugin to overhaul your minecraft's chat.
 - Custom join message
 - Custom leave message
 - Custom chat format
+- Custom chat/join/leave format for groups
 - Custom /msg format for sender and receiver
 
 ## Commands
@@ -21,6 +22,7 @@ A simple plugin to overhaul your minecraft's chat.
 - chat.reload | allows the use of the reload command (default op)
 - chat.message | allows the use of the message command (default true)
 - chat.reply | allows the use of the reply command (default true)
+- chat.group.<groupName>
 
 ## Config
 
@@ -28,6 +30,7 @@ A simple plugin to overhaul your minecraft's chat.
 - Customize chat format
 - Customize join/leave format
 - Customize /msg format
+- Customize groups
 
 ## Help
 if you need help, I would recommend joining my [discord](https://discord.gg/E3qwNDDKDu) and creating a ticket or creating an issue on github.
