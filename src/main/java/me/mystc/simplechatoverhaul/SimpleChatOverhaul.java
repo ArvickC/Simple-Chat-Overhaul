@@ -1,5 +1,6 @@
 package me.mystc.simplechatoverhaul;
 
+import me.mystc.simplechatoverhaul.Commands.Announce;
 import me.mystc.simplechatoverhaul.Commands.Message;
 import me.mystc.simplechatoverhaul.Commands.Reload;
 import me.mystc.simplechatoverhaul.Commands.Reply;
@@ -27,6 +28,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     Message message = new Message();
     MessageTabComplete messageTab = new MessageTabComplete();
     Reply reply = new Reply();
+    Announce bc = new Announce();
 
     public static Boolean groupEnabled = false;
 
@@ -40,6 +42,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     public static String messageCommandNoOnlineError = "";
     public static String replyCommandInputError = "";
     public static String replyCommandPlayerError = "";
+    public static String announceCommandInputError = "";
 
     @Override
     public void onEnable() {
@@ -66,7 +69,6 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     }
 
     // Events
-    //TODO Join/Leave sound (group)
     //TODO Announce
     //TODO Staffchat
     @EventHandler
@@ -148,6 +150,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         MessagesFile.get().addDefault("message-command-noOnline-error", "&e That player isn't&c online&e.");
         MessagesFile.get().addDefault("reply-command-input-error", "&cIncorrect format&e: /r <message>.");
         MessagesFile.get().addDefault("reply-command-player-error", "&eYou have no one to&c reply&e to.");
+        MessagesFile.get().addDefault("announce-command-input-error", "&cIncorrect format&e: /bc <message>");
 
         MessagesFile.get().options().copyDefaults(true);
         MessagesFile.save();
@@ -163,6 +166,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         messageCommandNoOnlineError = MessagesFile.get().getString("message-command-noOnline-error");
         replyCommandInputError = MessagesFile.get().getString("reply-command-input-error");
         replyCommandPlayerError = MessagesFile.get().getString("reply-command-player-error");
+        announceCommandInputError = MessagesFile.get().getString("announce-command-input-error");
     }
 
     void setupCommands() {
@@ -170,6 +174,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         getCommand("message").setExecutor(message);
         getCommand("message").setTabCompleter(messageTab);
         getCommand("reply").setExecutor(reply);
+        getCommand("announce").setExecutor(bc);
     }
 
     void groupSetup() {

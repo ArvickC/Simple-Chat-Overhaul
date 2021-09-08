@@ -4,6 +4,18 @@
 # This is what the plugin prefix will be, i.e.: "[Chat Overhaul] plugin reloaded"
 plugin-prefix: "&e[&cChat Overhaul&e] "
 
+# Announcement settings
+announce:
+  # This enables/disables the /announcement command
+  enable-announce: true
+
+  # This determines weather the announcement should
+  # have a sound or not
+  play-sound: false
+
+  # This is where you can customize the format for the announcement.
+  announce-format: "&c[&eBroadcast&c] <message>"
+
 # This section is the entire config for groups, aside for setting the group visual itself
 # you can find that in the groups.yml file.
 groups:
