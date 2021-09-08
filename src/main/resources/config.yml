@@ -15,6 +15,8 @@ groups:
   # For a player to be part of a group, they need the permission:
   # chat.group.<group name>
   # Example for 'admin': chat.group.admin
+  # NOTE: The order it searches for is from top to bottom, in this example,
+  # It will see if the player is in the admin group, THEN the mod group.
   group-names: ["admin", "mod"]
 
 # This is what will show when a player sends a message (default)
