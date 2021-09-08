@@ -50,6 +50,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         saveDefaultConfig();
         setupMessagesFile();
         getMessagesFile();
+        groupSetup();
 
         prefix = getConfig().getString("plugin-prefix");
 
@@ -100,7 +101,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
             String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
             for(String group : groups) {
                 if(e.getPlayer().hasPermission("chat.group." + group)) {
-                    format = GroupsFile.get().getString(group);
+                    format = GroupsFile.get().getString(group+"-join");
                     format = format.replaceAll("<player>", name);
                     e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', format));
                     return;
@@ -121,7 +122,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
             String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
             for(String group : groups) {
                 if(e.getPlayer().hasPermission("chat.group." + group)) {
-                    format = GroupsFile.get().getString(group);
+                    format = GroupsFile.get().getString(group+"-leave");
                     format = format.replaceAll("<player>", name);
                     e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', format));
                     return;
@@ -178,11 +179,11 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
 
         GroupsFile.setup();
 
-        GroupsFile.get().addDefault("admin", "&7[&cAdmin&7]&f <player>&7 >>&f <message>");
+        GroupsFile.get().addDefault("admin", "&7[&cAdmin&7]&c <player>&7 >>&f <message>");
         GroupsFile.get().addDefault("admin-join", "&7[&a+&7]&c <player>");
         GroupsFile.get().addDefault("admin-leave", "&7[&c-&7]&c <player>");
 
-        GroupsFile.get().addDefault("mod", "&7[&aMod&7]&f <player>&7 >>&f <message>");
+        GroupsFile.get().addDefault("mod", "&7[&aMod&7]&a <player>&7 >>&f <message>");
         GroupsFile.get().addDefault("mod-join", "&7[&a+&7]&a <player>");
         GroupsFile.get().addDefault("mod-leave", "&7[&c-&7]&a <player>");
 
