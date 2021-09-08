@@ -4,6 +4,7 @@ import me.mystc.simplechatoverhaul.Commands.Message;
 import me.mystc.simplechatoverhaul.Commands.Reload;
 import me.mystc.simplechatoverhaul.Commands.Reply;
 import me.mystc.simplechatoverhaul.Commands.TabCompleters.MessageTabComplete;
+import me.mystc.simplechatoverhaul.Files.GroupsFile;
 import me.mystc.simplechatoverhaul.Files.MessagesFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,6 +27,8 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     Message message = new Message();
     MessageTabComplete messageTab = new MessageTabComplete();
     Reply reply = new Reply();
+
+    public static Boolean groupEnabled = false;
 
     public static String prefix = "";
     public static String pluginActivate = "";
@@ -62,11 +65,27 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     }
 
     // Events
+    //TODO Join/Leave sound (group)
+    //TODO Announce
+    //TODO Staffchat
     @EventHandler
     public void onSendMessage(AsyncPlayerChatEvent e) {
         String message = e.getMessage();
         String name = e.getPlayer().getDisplayName();
-        String format = getConfig().getString("message-format");
+        String format = "";
+        if(groupEnabled) {
+            String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
+            for(String group : groups) {
+                if(e.getPlayer().hasPermission("chat.group." + group)) {
+                    format = GroupsFile.get().getString(group);
+                    format = format.replaceAll("<player>", name);
+                    format = format.replaceAll("<message>", message);
+                    e.setFormat(ChatColor.translateAlternateColorCodes('&', format));
+                    return;
+                }
+            }
+        }
+        format = getConfig().getString("message-format");
         format = format.replaceAll("<player>", name);
         format = format.replaceAll("<message>", message);
 
@@ -76,7 +95,19 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         String name = e.getPlayer().getDisplayName();
-        String format = getConfig().getString("join-format");
+        String format = "";
+        if(groupEnabled) {
+            String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
+            for(String group : groups) {
+                if(e.getPlayer().hasPermission("chat.group." + group)) {
+                    format = GroupsFile.get().getString(group);
+                    format = format.replaceAll("<player>", name);
+                    e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', format));
+                    return;
+                }
+            }
+        }
+        format = getConfig().getString("join-format");
         format = format.replaceAll("<player>", name);
 
         e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', format));
@@ -85,7 +116,19 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         String name = e.getPlayer().getDisplayName();
-        String format = getConfig().getString("leave-format");
+        String format = "";
+        if(groupEnabled) {
+            String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
+            for(String group : groups) {
+                if(e.getPlayer().hasPermission("chat.group." + group)) {
+                    format = GroupsFile.get().getString(group);
+                    format = format.replaceAll("<player>", name);
+                    e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', format));
+                    return;
+                }
+            }
+        }
+        format = getConfig().getString("leave-format");
         format = format.replaceAll("<player>", name);
 
         e.setQuitMessage(ChatColor.translateAlternateColorCodes('&', format));
@@ -126,6 +169,25 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         getCommand("message").setExecutor(message);
         getCommand("message").setTabCompleter(messageTab);
         getCommand("reply").setExecutor(reply);
+    }
+
+    void groupSetup() {
+        if(getConfig().getBoolean("groups.enable-groups")) {
+            groupEnabled = true;
+        }
+
+        GroupsFile.setup();
+
+        GroupsFile.get().addDefault("admin", "&7[&cAdmin&7]&f <player>&7 >>&f <message>");
+        GroupsFile.get().addDefault("admin-join", "&7[&a+&7]&c <player>");
+        GroupsFile.get().addDefault("admin-leave", "&7[&c-&7]&c <player>");
+
+        GroupsFile.get().addDefault("mod", "&7[&aMod&7]&f <player>&7 >>&f <message>");
+        GroupsFile.get().addDefault("mod-join", "&7[&a+&7]&a <player>");
+        GroupsFile.get().addDefault("mod-leave", "&7[&c-&7]&a <player>");
+
+        GroupsFile.get().options().copyDefaults(true);
+        GroupsFile.save();
     }
 
     public static SimpleChatOverhaul getInstance() {

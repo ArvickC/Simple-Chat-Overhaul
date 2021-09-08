@@ -4,7 +4,20 @@
 # This is what the plugin prefix will be, i.e.: "[Chat Overhaul] plugin reloaded"
 plugin-prefix: "&e[&cChat Overhaul&e] "
 
-# This is what will show when a player sends a message
+# This section is the entire config for groups, aside for setting the group visual itself
+# you can find that in the groups.yml file.
+groups:
+  # This enables/disables groups. (defaults to false)
+  enable-groups: false
+
+  # These are the names of the groups
+  # NOTE: these have to be THE SAME as the ones in groups.yml
+  # For a player to be part of a group, they need the permission:
+  # chat.group.<group name>
+  # Example for 'admin': chat.group.admin
+  group-names: ["admin", "mod"]
+
+# This is what will show when a player sends a message (default)
 # Vanilla default: "&f<<player>> <message>"
 # <player> - player name
 # <message> - player message

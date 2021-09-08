@@ -1,5 +1,6 @@
 package me.mystc.simplechatoverhaul.Commands;
 
+import me.mystc.simplechatoverhaul.Files.GroupsFile;
 import me.mystc.simplechatoverhaul.Files.MessagesFile;
 import me.mystc.simplechatoverhaul.SimpleChatOverhaul;
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ public class Reload implements CommandExecutor {
 
         SimpleChatOverhaul.getInstance().reloadConfig();
         MessagesFile.reload();
+        GroupsFile.reload();
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + reloaded));
 
