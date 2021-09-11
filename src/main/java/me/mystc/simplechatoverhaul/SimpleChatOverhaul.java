@@ -1,9 +1,7 @@
 package me.mystc.simplechatoverhaul;
 
-import me.mystc.simplechatoverhaul.Commands.Announce;
-import me.mystc.simplechatoverhaul.Commands.Message;
-import me.mystc.simplechatoverhaul.Commands.Reload;
-import me.mystc.simplechatoverhaul.Commands.Reply;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import me.mystc.simplechatoverhaul.Commands.*;
 import me.mystc.simplechatoverhaul.Commands.TabCompleters.MessageTabComplete;
 import me.mystc.simplechatoverhaul.Files.GroupsFile;
 import me.mystc.simplechatoverhaul.Files.MessagesFile;
@@ -23,12 +21,14 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     // Var
     static SimpleChatOverhaul instance;
     public static HashMap<Player, Player> replyPlayers = new HashMap<>();
+    public static HashMap<Player, Boolean> staffChatToggle = new HashMap<>();
 
     Reload reload = new Reload();
     Message message = new Message();
     MessageTabComplete messageTab = new MessageTabComplete();
     Reply reply = new Reply();
     Announce bc = new Announce();
+    Staffchat staffchat = new Staffchat();
 
     public static Boolean groupEnabled = false;
 
@@ -69,13 +69,47 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
     }
 
     // Events
-    //TODO Announce
-    //TODO Staffchat
     @EventHandler
     public void onSendMessage(AsyncPlayerChatEvent e) {
         String message = e.getMessage();
         String name = e.getPlayer().getDisplayName();
         String format = "";
+        String staffTrigger = getConfig().getString("staffchat.staffchat-trigger");
+        int triggerLength = staffTrigger.length();
+        String staffFormat = getConfig().getString("staffchat.staffchat-format");
+
+        if(e.getPlayer().hasPermission("chat.staff")) {
+            if(staffChatToggle.containsKey(e.getPlayer())) {
+                if(staffChatToggle.get(e.getPlayer())) {
+                    message = message.replaceFirst(staffTrigger, "");
+                    staffFormat = staffFormat.replaceAll("<player>", name);
+                    staffFormat = staffFormat.replaceAll("<message>", message);
+                    e.setCancelled(true);
+                    for(Player p : Bukkit.getOnlinePlayers()) {
+                        if(p.hasPermission("chat.staff")) {
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                        }
+                    }
+                    System.out.println(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                    return;
+                }
+            }
+
+            if(message.substring(0, triggerLength).equalsIgnoreCase(staffTrigger)) {
+                message = message.replaceFirst(staffTrigger, "");
+                staffFormat = staffFormat.replaceAll("<player>", name);
+                staffFormat = staffFormat.replaceAll("<message>", message);
+                e.setCancelled(true);
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    if(p.hasPermission("chat.staff")) {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                    }
+                }
+                System.out.println(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                return;
+            }
+        }
+
         if(groupEnabled) {
             String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
             for(String group : groups) {
@@ -175,6 +209,7 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         getCommand("message").setTabCompleter(messageTab);
         getCommand("reply").setExecutor(reply);
         getCommand("announce").setExecutor(bc);
+        getCommand("staffchat").setExecutor(staffchat);
     }
 
     void groupSetup() {

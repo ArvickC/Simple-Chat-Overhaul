@@ -1,5 +1,5 @@
 name: SimpleChatOverhaul
-version: 1.1.2
+version: 1.2.0
 main: me.mystc.simplechatoverhaul.SimpleChatOverhaul
 api-version: 1.17
 authors: [mystc]
@@ -17,6 +17,9 @@ commands:
   announce:
     description: sends a message to all players as an announcement/broadcast
     aliases: [anc, announcement, broadcast, bc, brc, brdc]
+  staffchat:
+    description: toggle staff chat
+    aliases: [staffchattoggle, sct, sc]
 permissions:
   chat.reload:
     description: Allows you to use the reload command
@@ -29,4 +32,7 @@ permissions:
     default: true
   chat.announce:
     description: Allows you to use the announce command
+    default: op
+  chat.staff:
+    description: Allows you to use staffchat
     default: op

@@ -4,6 +4,20 @@
 # This is what the plugin prefix will be, i.e.: "[Chat Overhaul] plugin reloaded"
 plugin-prefix: "&e[&cChat Overhaul&e] "
 
+staffchat:
+  # This enables/disables the staffchat feature
+  enable-sc: true
+
+  # This is the trigger for staffchat
+  # for the default "# " to use staffchat you type
+  # '# this is staff chat' to use staffchat
+  staffchat-trigger: "# "
+
+  # This controls the staffchat format
+  # <player> - player name
+  # <message> - player message
+  staffchat-format: "&7[&eStaffChat&7]&e <player>&7 >>&e <message>"
+
 # Announcement settings
 announce:
   # This enables/disables the /announcement command
@@ -14,6 +28,7 @@ announce:
   play-sound: false
 
   # This is where you can customize the format for the announcement.
+  # <message> - player message
   announce-format: "&c[&eBroadcast&c] <message>"
 
 # This section is the entire config for groups, aside for setting the group visual itself
