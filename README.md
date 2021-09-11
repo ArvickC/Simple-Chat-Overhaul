@@ -26,7 +26,7 @@ A simple plugin to overhaul your minecraft's chat.
 - chat.reload | allows the use of the reload command (default op)
 - chat.message | allows the use of the message command (default true)
 - chat.reply | allows the use of the reply command (default true)
-- chat.group.<groupName>
+- chat.group.[groupName]
 - chat.announce | allows the use of the /bc command (default op)
 - chat.staff | allows the use of staffchat (+command)
 
