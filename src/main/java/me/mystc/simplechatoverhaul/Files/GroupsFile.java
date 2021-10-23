@@ -40,3 +40,4 @@ public class GroupsFile {
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 }
+
