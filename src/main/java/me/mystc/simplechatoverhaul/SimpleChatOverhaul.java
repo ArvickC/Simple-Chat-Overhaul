@@ -94,19 +94,20 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
                     return;
                 }
             }
-
-            if(message.substring(0, triggerLength).equalsIgnoreCase(staffTrigger)) {
-                message = message.replaceFirst(staffTrigger, "");
-                staffFormat = staffFormat.replaceAll("<player>", name);
-                staffFormat = staffFormat.replaceAll("<message>", message);
-                e.setCancelled(true);
-                for(Player p : Bukkit.getOnlinePlayers()) {
-                    if(p.hasPermission("chat.staff")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', staffFormat));
+            if(!(message.length() <= triggerLength)) {
+                if (message.substring(0, triggerLength).equalsIgnoreCase(staffTrigger)) {
+                    message = message.replaceFirst(staffTrigger, "");
+                    staffFormat = staffFormat.replaceAll("<player>", name);
+                    staffFormat = staffFormat.replaceAll("<message>", message);
+                    e.setCancelled(true);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.hasPermission("chat.staff")) {
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                        }
                     }
+                    System.out.println(ChatColor.translateAlternateColorCodes('&', staffFormat));
+                    return;
                 }
-                System.out.println(ChatColor.translateAlternateColorCodes('&', staffFormat));
-                return;
             }
         }
 
