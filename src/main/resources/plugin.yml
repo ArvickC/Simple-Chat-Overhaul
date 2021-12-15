@@ -1,7 +1,7 @@
 name: SimpleChatOverhaul
-version: 1.2.3
+version: 1.2.4
 main: me.mystc.simplechatoverhaul.SimpleChatOverhaul
-api-version: 1.18.1
+api-version: 1.18
 authors: [mystc]
 description: A simple plugin that overhauls the chat.
 commands:
