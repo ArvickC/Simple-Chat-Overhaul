@@ -132,15 +132,25 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if(!getConfig().getBoolean("enable-join")) {
+            return;
+        }
+
         String name = e.getPlayer().getDisplayName();
         String format = "";
+        String tabFormat = "";
         if(groupEnabled) {
             String[] groups = getConfig().getStringList("groups.group-names").toArray(new String[0]);
             for(String group : groups) {
                 if(e.getPlayer().hasPermission("chat.group." + group)) {
                     format = GroupsFile.get().getString(group+"-join");
+                    tabFormat = GroupsFile.get().getString(group+"-tab");
+
                     format = format.replaceAll("<player>", name);
+                    tabFormat = tabFormat.replaceAll("<player>", name);
+
                     e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', format));
+                    e.getPlayer().setPlayerListName(ChatColor.translateAlternateColorCodes('&', tabFormat));
                     return;
                 }
             }
@@ -153,6 +163,10 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
+        if(!getConfig().getBoolean("enable-leave")) {
+            return;
+        }
+
         String name = e.getPlayer().getDisplayName();
         String format = "";
         if(groupEnabled) {
@@ -223,10 +237,12 @@ public final class SimpleChatOverhaul extends JavaPlugin implements Listener {
         GroupsFile.get().addDefault("admin", "&7[&cAdmin&7]&c <player>&7 >>&f <message>");
         GroupsFile.get().addDefault("admin-join", "&7[&a+&7]&c <player>");
         GroupsFile.get().addDefault("admin-leave", "&7[&c-&7]&c <player>");
+        GroupsFile.get().addDefault("admin-tab", "&c<player>");
 
         GroupsFile.get().addDefault("mod", "&7[&aMod&7]&a <player>&7 >>&f <message>");
         GroupsFile.get().addDefault("mod-join", "&7[&a+&7]&a <player>");
         GroupsFile.get().addDefault("mod-leave", "&7[&c-&7]&a <player>");
+        GroupsFile.get().addDefault("mod-tab", "&a<player>");
 
         GroupsFile.get().options().copyDefaults(true);
         GroupsFile.save();

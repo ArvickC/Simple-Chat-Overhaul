@@ -52,6 +52,10 @@ groups:
 # <message> - player message
 message-format: "&f<player>&7 >>&f <message>"
 
+# Enable or disable Join/Leave messages
+enable-join: true
+enable-leave: true
+
 # This will set the join/leave message
 join-format: "&7[&a+&7] <player>"
 leave-format: "&7[&c-&7] <player>"
